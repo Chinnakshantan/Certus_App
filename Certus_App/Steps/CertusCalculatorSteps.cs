@@ -33,19 +33,31 @@ namespace Certus_App.Steps
         [When(@"I select '(.*)' state")]
         public void GivenISelectState(string state)
         {
-            if(state == "NewYork")
-                ControlHelper.SelectDropdown("42",By.XPath(certusCalculatorPage.State));
+            if(state == "California")
+                ControlHelper.SelectDropdown("7",By.XPath(certusCalculatorPage.State));
+            else if (state == "Florida")
+                ControlHelper.SelectDropdown("13", By.XPath(certusCalculatorPage.State));
+            else if (state == "Michigan")
+                ControlHelper.SelectDropdown("29", By.XPath(certusCalculatorPage.State));
+            else if (state == "New York")
+                ControlHelper.SelectDropdown("42", By.XPath(certusCalculatorPage.State));
+            else if (state == "Pennsylvania")
+                ControlHelper.SelectDropdown("46", By.XPath(certusCalculatorPage.State));
+            else if (state == "Texas")
+                ControlHelper.SelectDropdown("52", By.XPath(certusCalculatorPage.State));
+
+
             Thread.Sleep(2000); 
-            Reporting._scenario.Log(AventStack.ExtentReports.Status.Pass, state +" state is selected");
+            Reporting.Log(Status.Pass, state +" state is selected");
         }
 
-        [When(@"I select '(.*)' county")]
-        public void WhenISelectCounty(string county)
+        [When(@"I select random county from selected state")]
+        public void WhenISelectCounty()
         {
-            if (county == "Livingston")
-                ControlHelper.SelectDropdown("2013", By.XPath(certusCalculatorPage.County));
+            string county = ControlHelper.SelectRandomDropDown(By.XPath(certusCalculatorPage.County));
+            
 
-            Reporting._scenario.Log(AventStack.ExtentReports.Status.Pass, county +" county is selected");
+            Reporting.Log(Status.Pass, county +" county is selected");
         }
 
         [When(@"I press '(.*)' button in certus calculator")]
@@ -105,6 +117,17 @@ namespace Certus_App.Steps
             if (button == "Next")
                 ControlHelper.ButtonClick(By.XPath(certusCalculatorPage.NextLoanInfoBtn));
         }
+
+        [When(@"I check for next button and press if exists")]
+        public void WhenICheckForNextButtonAndPressIfExists()
+        {
+            bool nextPresent = ControlHelper.IsElementPresent(By.XPath(certusCalculatorPage.NextLoanInfoBtn));
+            if(nextPresent == true)
+            {
+                ControlHelper.ButtonClick(By.XPath(certusCalculatorPage.NextLoanInfoBtn));
+            }
+        }
+
 
         [Then(@"validate Transaction Id is generated")]
         public void ThenValidateTransactionIdIsGenerated()

@@ -66,10 +66,21 @@ namespace Certus_App.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Calculating Recording fee")]
         [NUnit.Framework.CategoryAttribute("Recordingfee")]
-        public virtual void CalculatingRecordingFee()
+        [NUnit.Framework.TestCaseAttribute("California", null)]
+        [NUnit.Framework.TestCaseAttribute("Florida", null)]
+        [NUnit.Framework.TestCaseAttribute("Michigan", null)]
+        [NUnit.Framework.TestCaseAttribute("New York", null)]
+        [NUnit.Framework.TestCaseAttribute("Pennsylvania", null)]
+        [NUnit.Framework.TestCaseAttribute("Texas", null)]
+        public virtual void CalculatingRecordingFee(string state, string[] exampleTags)
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculating Recording fee", new string[] {
-                        "Recordingfee"});
+            string[] @__tags = new string[] {
+                    "Recordingfee"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculating Recording fee", @__tags);
 #line 5
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -77,9 +88,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.When("I press \'Certus Calculator\' in Home page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
- testRunner.And("I select \'NewYork\' state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And(string.Format("I select \'{0}\' state", state), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
- testRunner.And("I select \'Livingston\' county", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I select random county from selected state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
  testRunner.And("I press \'Search\' button in certus calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
@@ -99,9 +110,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 18
  testRunner.And("I press \'Next\' in Loan information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
- testRunner.And("I press \'Next\' in Mortagage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I check for next button and press if exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
- testRunner.And("I press \'Next\' in Mortagage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I check for next button and press if exists", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 21
  testRunner.Then("validate Transaction Id is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
