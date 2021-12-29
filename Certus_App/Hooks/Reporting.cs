@@ -174,7 +174,7 @@ namespace SeleniumNUnitExtentReport.Config
             }
             else
             {
-                 _scenario.CreateNode<T>(ScenarioStepContext.Current.StepInfo.Text).Pass("");
+               //  _scenario.CreateNode<T>(ScenarioStepContext.Current.StepInfo.Text).Pass("");
             }
         }
 
@@ -187,7 +187,7 @@ namespace SeleniumNUnitExtentReport.Config
             }
             else
             {
-                step = _scenario.CreateNode<T>(ScenarioStepContext.Current.StepInfo.Text);
+                step = _scenario.CreateNode<T>(_scenarioContext.StepContext.StepInfo.Text);
             }
         }
         private static ExtentTest featureName;

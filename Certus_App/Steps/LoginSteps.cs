@@ -38,40 +38,60 @@ namespace Certus_App.Steps
         [Given(@"User login to certus calculator as 'client'")]
         public void GivenILoginToCetrusCalculatorAs()
         {
-            string clientUsername = ConfigurationManager.AppSettings.Get("ClientUsername");
-            string clientPassword = ConfigurationManager.AppSettings.Get("ClientPassword");
-            ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterUserId), clientUsername);
-            ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterPassword), clientPassword);
-            ControlHelper.ButtonClick(By.XPath(loginPage.SignInBtn));
+            try
+            {
+                string clientUsername = ConfigurationManager.AppSettings.Get("ClientUsername");
+                string clientPassword = ConfigurationManager.AppSettings.Get("ClientPassword");
+                ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterUserId), clientUsername);
+                ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterPassword), clientPassword);
+                ControlHelper.ButtonClick(By.XPath(loginPage.SignInBtn));
+                Reporting.Log(Status.Pass, "Sign in button clicked");
+            }
+            catch (Exception e)
+            {
+                Reporting.Log(Status.Fail, e.ToString());
+            }
 
-            Reporting.Log(Status.Fail, "Sign in button clicked");
+
         }
 
         [Then(@"Validate login page is successful")]
         public void ThenValidateLoginPageIsSuccessful()
         {
-            Thread.Sleep(5000);
-             string userName = ControlHelper.GetText(By.XPath(homePage.userNameText));
+            
+            string userName = ControlHelper.GetText(By.XPath(homePage.userNameText));
             if (userName == "Test")
-                Reporting._scenario.Log(AventStack.ExtentReports.Status.Pass, "Sign in successful");
+            {
+                Reporting.Log(Status.Pass, "Sign in successful with user 'Test'");
+            }                
+            else
+            {
+                Reporting.Log(Status.Fail, "Sign in failed");
+            }
+                
 
 
-           
+
         }
 
 
         [Given(@"I login certus using 'Invalid credentials'")]
         public void GivenILogincertususingInvalid()
-
         {
-            string BadUsername = "BadUsername";
-            string BadPassword = "BadPassword";
-            ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterUserId), BadUsername);
-            ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterPassword), BadPassword);
-            ControlHelper.ButtonClick(By.XPath(loginPage.SignInBtn));
-
-
-            Reporting._scenario.Log(AventStack.ExtentReports.Status.Pass, "User should'nt be able to login");
+            try
+            {
+                string BadUsername = "BadUsername";
+                string BadPassword = "BadPassword";
+                ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterUserId), BadUsername);
+                ControlHelper.EnterText_In_Textbox(By.XPath(loginPage.EnterPassword), BadPassword);
+                ControlHelper.ButtonClick(By.XPath(loginPage.SignInBtn));
+                Reporting.Log(Status.Pass, "User should'nt be able to login");
+            }
+            catch(Exception e)
+            {
+                Reporting.Log(Status.Fail, e.ToString());
+            }
+            
         }
 
         [Then(@"Validate unsuccessful login")]
@@ -79,9 +99,9 @@ namespace Certus_App.Steps
         {
             string incorrectLoginMessage = ControlHelper.GetText(By.XPath(loginPage.ErrorLoginText));
             if(incorrectLoginMessage == "Incorrect Username or Password.")
-                Reporting._scenario.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
-
-            
+                Reporting.Log(Status.Pass, "'Incorrect username and password' is displayed");
+            else
+                Reporting.Log(Status.Fail, "Unable to find 'Incorrect username and password' text");
         }
     }
     }
