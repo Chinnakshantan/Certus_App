@@ -137,6 +137,16 @@ namespace Certus_App.Helpers
             SelectElement selectElement = new SelectElement(driver.FindElement(locator));
             selectElement.SelectByValue(value);
         }
+        public static string SelectRandomDropDown(By locator)
+        {
+            SelectElement selectElement = new SelectElement(driver.FindElement(locator));
+            IList<IWebElement> counties = selectElement.Options;
+
+            Random random = new Random();
+            int randomIndex = random.Next(counties.Count);
+            selectElement.SelectByText(counties.ElementAt(randomIndex).Text);
+            return counties.ElementAt(randomIndex).Text;
+        }
         public static void NavigateToURL(string Url)
         {
            driver.Navigate().GoToUrl(Url);
